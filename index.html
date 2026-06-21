@@ -7,7 +7,7 @@
 <meta name="description" content="Η Χριστίνα Πανουσοπούλου, Ειδική Παιδίατρος – Νεογνολόγος στο Περιστέρι. Εξειδικευμένη φροντίδα νεογνού & παιδιού, υποστήριξη θηλασμού, ανώδυνοι εμβολιασμοί.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --cream:#FBF8F3;
@@ -21,8 +21,13 @@
   --gold:#C2974A;
   --line:rgba(51,66,58,.14);
   --shadow:0 22px 60px -28px rgba(51,66,58,.45);
+  --shadow-lg: 0 40px 80px -20px rgba(51,66,58,.3);
+  --glass: rgba(251, 248, 243, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --marble: radial-gradient(circle at top left, #FFFFFF 0%, rgba(243, 236, 224, 0.6) 40%, rgba(251, 248, 243, 1) 100%);
   --maxw:1180px;
   --ease:cubic-bezier(.22,1,.36,1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -38,220 +43,266 @@ body{
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:400;line-height:1.1;letter-spacing:-.01em}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px; position:relative; z-index:2;}
+.text-center{text-align:center;}
 .eyebrow{
   font-family:'Inter',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.22em;
   text-transform:uppercase;color:var(--coral);display:inline-flex;align-items:center;gap:.6em;
 }
 .eyebrow::before{content:"";width:26px;height:1px;background:var(--coral);display:inline-block;opacity:.7}
 
-/* ---------- reveal ---------- */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+/* ---------- advanced animations ---------- */
+.reveal { opacity: 0; transform: translateY(40px) scale(0.98); transition: all 1.2s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-left { opacity: 0; transform: translateX(-50px); transition: all 1.2s var(--ease); }
+.reveal-left.in { opacity: 1; transform: none; }
+.reveal-right { opacity: 0; transform: translateX(50px); transition: all 1.2s var(--ease); }
+.reveal-right.in { opacity: 1; transform: none; }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.float { animation: float 6s ease-in-out infinite; }
+.float-alt { animation: float 8s ease-in-out infinite reverse; }
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(199,107,82,.4); }
+  70% { box-shadow: 0 0 0 15px rgba(199,107,82,0); }
+  100% { box-shadow: 0 0 0 0 rgba(199,107,82,0); }
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal, .reveal-left, .reveal-right { opacity:1; transform:none; transition:none; }
+  .float, .float-alt { animation: none; }
+}
 
 /* ---------- nav ---------- */
-header{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .4s var(--ease),box-shadow .4s var(--ease)}
-header.scrolled{background:rgba(251,248,243,.88);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:78px}
-.brand{display:flex;align-items:center;gap:13px}
-.brand .logo{width:46px;height:46px;flex:none}
+header{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .5s var(--ease),backdrop-filter .5s,box-shadow .5s; padding: 10px 0;}
+header.scrolled{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 1px 0 var(--line), 0 10px 30px rgba(0,0,0,0.03); padding: 0;}
+.nav{display:flex;align-items:center;justify-content:space-between;height:84px;transition:height .4s var(--ease);}
+header.scrolled .nav{height:72px;}
+.brand{display:flex;align-items:center;gap:14px; transition:transform .3s;}
+.brand:hover{transform:scale(1.02);}
+.brand .logo{width:52px;height:52px;flex:none; transition:width .3s, height .3s;}
+header.scrolled .brand .logo {width:44px; height:44px;}
 .brand .bt{display:flex;flex-direction:column;line-height:1}
-.brand .bt b{font-family:'Fraunces',serif;font-weight:500;font-size:1.12rem;letter-spacing:-.01em}
-.brand .bt span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-deep);margin-top:3px}
-.menu{display:flex;align-items:center;gap:34px}
+.brand .bt b{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;letter-spacing:-.01em}
+.brand .bt span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-deep);margin-top:4px}
+.menu{display:flex;align-items:center;gap:36px}
 .menu a.lnk{font-size:.86rem;font-weight:500;color:var(--ink-soft);position:relative;padding:4px 0;transition:color .3s}
-.menu a.lnk::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--coral);transition:width .35s var(--ease)}
+.menu a.lnk::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--coral);transition:width .4s var(--ease)}
 .menu a.lnk:hover{color:var(--ink)}
 .menu a.lnk:hover::after{width:100%}
-.lang{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--cream)}
-.lang button{font-family:'Inter';font-size:.74rem;font-weight:600;letter-spacing:.04em;padding:5px 11px;border:0;border-radius:999px;background:transparent;color:var(--ink-soft);cursor:pointer;transition:.3s}
-.lang button.on{background:var(--ink);color:var(--cream)}
-.cta-nav{background:var(--coral);color:#fff;padding:11px 22px;border-radius:999px;font-size:.84rem;font-weight:600;transition:transform .3s var(--ease),box-shadow .3s}
-.cta-nav:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px rgba(199,107,82,.7)}
+.lang{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;background:rgba(255,255,255,0.5);}
+.lang button{font-family:'Inter';font-size:.74rem;font-weight:600;letter-spacing:.04em;padding:5px 12px;border:0;border-radius:999px;background:transparent;color:var(--ink-soft);cursor:pointer;transition:.3s}
+.lang button.on{background:var(--ink);color:var(--cream);box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+.cta-nav{background:var(--coral);color:#fff;padding:12px 24px;border-radius:999px;font-size:.84rem;font-weight:600;transition:all .4s var(--ease); animation: pulseGlow 3s infinite;}
+.cta-nav:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 15px 30px -10px rgba(199,107,82,.8); animation:none;}
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
 .burger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
 
 /* mobile menu */
-.mnav{position:fixed;inset:0;z-index:70;background:var(--cream);transform:translateX(100%);transition:transform .5s var(--ease);display:flex;flex-direction:column;padding:26px 28px 40px}
+.mnav{position:fixed;inset:0;z-index:70;background:var(--cream);transform:translateX(100%);transition:transform .6s var(--ease);display:flex;flex-direction:column;padding:26px 28px 40px}
 .mnav.open{transform:none}
 .mnav-top{display:flex;align-items:center;justify-content:space-between}
 .mnav-close{background:none;border:1px solid var(--line);width:46px;height:46px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.mnav-close svg{width:20px;height:20px}
 .mnav-links{display:flex;flex-direction:column;gap:6px;margin-top:48px}
-.mnav-links a{font-family:'Fraunces',serif;font-size:1.9rem;color:var(--ink);padding:10px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.mnav-links a{font-family:'Fraunces',serif;font-size:2.2rem;color:var(--ink);padding:12px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(20px);transition:all .5s var(--ease)}
 .mnav.open .mnav-links a{opacity:1;transform:none}
-.mnav.open .mnav-links a:nth-child(1){transition-delay:.08s}
-.mnav.open .mnav-links a:nth-child(2){transition-delay:.14s}
+/* Staggering in JS or CSS for mobile nav links */
+.mnav.open .mnav-links a:nth-child(1){transition-delay:.1s}
+.mnav.open .mnav-links a:nth-child(2){transition-delay:.15s}
 .mnav.open .mnav-links a:nth-child(3){transition-delay:.2s}
-.mnav.open .mnav-links a:nth-child(4){transition-delay:.26s}
-.mnav.open .mnav-links a:nth-child(5){transition-delay:.32s}
+.mnav.open .mnav-links a:nth-child(4){transition-delay:.25s}
+.mnav.open .mnav-links a:nth-child(5){transition-delay:.3s}
 .mnav-foot{margin-top:auto;display:flex;flex-direction:column;gap:16px}
 .mnav-lang{display:flex;gap:8px}
-.mnav-lang button{flex:1;padding:13px;border:1px solid var(--line);border-radius:14px;background:none;font-weight:600;font-size:.9rem;cursor:pointer;color:var(--ink-soft)}
+.mnav-lang button{flex:1;padding:14px;border:1px solid var(--line);border-radius:14px;background:none;font-weight:600;font-size:.9rem;cursor:pointer;color:var(--ink-soft)}
 .mnav-lang button.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
-.mnav-cta{background:var(--coral);color:#fff;text-align:center;padding:16px;border-radius:14px;font-weight:600}
+.mnav-cta{background:var(--coral);color:#fff;text-align:center;padding:18px;border-radius:16px;font-weight:600; font-size:1.05rem;}
 
-/* ---------- hero ---------- */
-.hero{position:relative;padding:170px 0 90px;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
-.hero h1{font-size:clamp(2.7rem,5.6vw,4.6rem);font-weight:500;letter-spacing:-.025em}
-.hero h1 em{font-style:italic;color:var(--coral)}
-.hero .lede{font-size:1.12rem;color:var(--ink-soft);max-width:30em;margin-top:24px}
-.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
-.tag{font-size:.78rem;font-weight:500;color:var(--sage-deep);background:rgba(123,146,121,.12);border:1px solid rgba(123,146,121,.28);padding:7px 14px;border-radius:999px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
-.btn-primary{background:var(--ink);color:var(--cream);padding:15px 30px;border-radius:999px;font-weight:600;font-size:.92rem;transition:transform .3s var(--ease),box-shadow .3s}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.btn-ghost{border:1px solid var(--line);padding:15px 28px;border-radius:999px;font-weight:600;font-size:.92rem;color:var(--ink);transition:.3s;display:inline-flex;align-items:center;gap:9px}
-.btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:var(--cream)}
+/* ---------- centered hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 0 60px;overflow:hidden;background:var(--marble);}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8) 0%, transparent 70%);z-index:1;}
+.hero-content{max-width:960px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:10;}
+.hero h1{font-size:clamp(3rem,7vw,5.5rem);font-weight:400;letter-spacing:-.03em;margin:24px 0;line-height:1.05;}
+.hero h1 em{font-style:italic;color:var(--coral);position:relative;display:inline-block;}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:12px;background:rgba(212,154,140,.2);z-index:-1;transform:rotate(-2deg);}
+.hero .lede{font-size:clamp(1.1rem,2vw,1.35rem);color:var(--ink-soft);max-width:36em;margin:0 auto 36px;line-height:1.6;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:46px;}
+.tag{font-size:.8rem;font-weight:500;color:var(--sage-deep);background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-border);padding:8px 18px;border-radius:999px;box-shadow:0 4px 15px rgba(0,0,0,0.03); transition:transform .3s;}
+.tag:hover{transform:translateY(-2px);}
+.hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;}
+.btn-primary{background:var(--ink);color:var(--cream);padding:18px 36px;border-radius:999px;font-weight:600;font-size:1rem;transition:transform .4s var(--ease),box-shadow .4s;}
+.btn-primary:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.btn-ghost{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);padding:17px 34px;border-radius:999px;font-weight:600;font-size:1rem;color:var(--ink);transition:all .4s var(--ease);display:inline-flex;align-items:center;gap:10px;}
+.btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:var(--cream);transform:translateY(-4px);box-shadow:var(--shadow);}
 
-.hero-photo{position:relative}
-.hero-photo .frame{position:relative;border-radius:200px 200px 26px 26px;overflow:hidden;box-shadow:var(--shadow);cursor:zoom-in;aspect-ratio:4/5}
-.hero-photo .frame img{width:100%;height:100%;object-fit:cover;object-position:center 20%;transition:transform 1.4s var(--ease)}
-.hero-photo .frame:hover img{transform:scale(1.04)}
-.hero-photo .badge{position:absolute;left:-22px;bottom:34px;background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:16px 20px;box-shadow:var(--shadow);max-width:210px}
-.hero-photo .badge .n{font-family:'Fraunces',serif;font-size:1.7rem;color:var(--coral);font-weight:500}
-.hero-photo .badge .l{font-size:.74rem;color:var(--ink-soft);line-height:1.4;margin-top:2px}
+/* ambient floating orbs in hero */
+.orb{position:absolute;border-radius:50%;filter:blur(60px);z-index:0;opacity:.5; pointer-events:none;}
+.orb-1{width:400px;height:400px;background:var(--rose);top:-100px;left:-100px;animation:float 12s ease-in-out infinite;}
+.orb-2{width:500px;height:500px;background:var(--sage);bottom:-200px;right:-100px;animation:float-alt 15s ease-in-out infinite;}
 
 /* floating botanical */
-.sprig{position:absolute;pointer-events:none;opacity:.5}
-.sprig-1{top:120px;right:-40px;width:240px;color:var(--sage);transform:rotate(8deg)}
-.sprig-2{bottom:-30px;left:-50px;width:200px;color:var(--rose);transform:rotate(-20deg) scaleX(-1)}
-
-/* ---------- marquee strip ---------- */
-.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--cream-2);overflow:hidden;padding:16px 0}
-.strip-track{display:flex;gap:60px;white-space:nowrap;animation:slide 32s linear infinite;width:max-content}
-.strip-track span{font-family:'Fraunces',serif;font-style:italic;font-size:1.15rem;color:var(--sage-deep);display:inline-flex;align-items:center;gap:60px}
-.strip-track span::after{content:"❋";color:var(--coral);font-style:normal;font-size:.9rem}
-@keyframes slide{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.strip-track{animation:none}}
+.sprig{position:absolute;pointer-events:none;opacity:.6;z-index:2;}
+.sprig-1{top:15%;left:5%;width:280px;color:var(--sage);transform:rotate(12deg);}
+.sprig-2{bottom:10%;right:5%;width:240px;color:var(--rose);transform:rotate(-25deg) scaleX(-1);}
 
 /* ---------- section base ---------- */
 section{position:relative}
-.sec{padding:104px 0}
-.sec-head{max-width:640px;margin-bottom:54px}
-.sec-head h2{font-size:clamp(2rem,3.8vw,3rem);font-weight:500;margin-top:18px}
-.sec-head p{color:var(--ink-soft);margin-top:18px;font-size:1.05rem}
+.sec{padding:140px 0}
+.sec-head{max-width:640px;margin-bottom:64px;}
+.sec-head h2{font-size:clamp(2.4rem,4vw,3.5rem);font-weight:500;margin-top:18px;}
+.sec-head p{color:var(--ink-soft);margin-top:20px;font-size:1.1rem;}
+.center-head{max-width:800px;margin:0 auto 70px;text-align:center;}
+.center-head h2{margin-top:18px;}
 
 /* about */
-.about{background:linear-gradient(180deg,var(--cream),var(--cream-2))}
-.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
-.about-imgs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.about-imgs figure{border-radius:18px;overflow:hidden;box-shadow:var(--shadow);cursor:zoom-in;aspect-ratio:3/4}
-.about-imgs figure:first-child{grid-column:1/-1;aspect-ratio:16/10}
-.about-imgs img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
-.about-imgs figure:hover img{transform:scale(1.05)}
-.about-body h2{font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:500;margin:16px 0 22px}
-.about-body p{color:var(--ink-soft);margin-bottom:18px}
+.about{background:var(--cream);}
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img-wrap .frame{border-radius:24px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/5;position:relative;z-index:2;}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 20%;transition:transform 1.8s var(--ease);}
+.about-img-wrap .frame:hover img{transform:scale(1.04);}
+.about-img-wrap .bg-shape{position:absolute;top:-30px;left:-30px;right:30px;bottom:30px;background:var(--cream-2);border-radius:24px;z-index:1; border:1px solid var(--line);}
+.about-body h2{font-size:clamp(2.2rem,3.8vw,3.2rem);font-weight:500;margin:18px 0 26px}
+.about-body p{color:var(--ink-soft);margin-bottom:22px;font-size:1.08rem;line-height:1.8;}
 .about-body p strong{color:var(--ink);font-weight:600}
-.credentials{margin-top:30px;display:grid;gap:2px;border-top:1px solid var(--line)}
-.cred{display:flex;gap:18px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
-.cred .y{font-family:'Fraunces',serif;font-style:italic;color:var(--coral);font-size:1rem;flex:none;width:160px}
-.cred .t{font-size:.95rem;color:var(--ink)}
+.credentials{margin-top:40px;display:grid;gap:2px;border-top:1px solid var(--line)}
+.cred{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.cred .y{font-family:'Fraunces',serif;font-style:italic;color:var(--coral);font-size:1.1rem;flex:none;width:170px;}
+.cred .t{font-size:1rem;color:var(--ink); font-weight:500;}
+
+/* The Space (New Gallery Section) */
+.space-sec{background:var(--marble); position:relative; overflow:hidden;}
+.space-sec::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--line);}
+.space-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:30px;align-items:center;margin-top:20px;}
+.s-fig{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);position:relative;}
+.s-fig:nth-child(1){aspect-ratio:4/3; transform:translateY(30px);}
+.s-fig:nth-child(2){aspect-ratio:3/4; transform:translateY(-30px);}
+.s-fig img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease);}
+.s-fig:hover img{transform:scale(1.05);}
 
 /* services */
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.card{background:var(--cream);border:1px solid var(--line);border-radius:24px;padding:38px 32px;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s;position:relative;overflow:hidden}
-.card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0,rgba(199,107,82,.07),transparent 60%);opacity:0;transition:opacity .5s}
-.card:hover{transform:translateY(-8px);box-shadow:var(--shadow);border-color:transparent}
+.services{background:var(--cream);}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.card{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:28px;padding:46px 36px;transition:all .6s var(--ease-out-back);position:relative;overflow:hidden; transform-style:preserve-3d; box-shadow:0 10px 40px rgba(0,0,0,0.03);}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0,rgba(199,107,82,.07),transparent 60%);opacity:0;transition:opacity .5s;}
+.card:hover{transform:translateY(-12px) scale(1.01);box-shadow:var(--shadow-lg);border-color:rgba(255,255,255,1);}
 .card:hover::before{opacity:1}
-.card .ic{width:54px;height:54px;color:var(--coral);margin-bottom:24px}
-.card h3{font-size:1.4rem;font-weight:500;margin-bottom:14px;line-height:1.2}
-.card p{font-size:.95rem;color:var(--ink-soft);margin-bottom:20px}
-.card ul{list-style:none;display:grid;gap:9px}
-.card li{font-size:.86rem;color:var(--ink);padding-left:22px;position:relative}
-.card li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--sage);border:1px solid var(--sage-deep)}
+.card .ic{width:60px;height:60px;color:var(--coral);margin-bottom:30px;transition:transform .5s var(--ease-out-back);}
+.card:hover .ic{transform:scale(1.1) rotate(5deg);}
+.card h3{font-size:1.5rem;font-weight:500;margin-bottom:16px;line-height:1.2}
+.card p{font-size:1rem;color:var(--ink-soft);margin-bottom:24px; line-height:1.6;}
+.card ul{list-style:none;display:grid;gap:12px}
+.card li{font-size:.9rem;color:var(--ink);padding-left:26px;position:relative; font-weight:500;}
+.card li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--sage);border:1px solid var(--sage-deep); box-shadow: 0 0 10px rgba(123,146,121,.4);}
 
-/* feature / philosophy */
-.philo{background:var(--ink);color:var(--cream);overflow:hidden;position:relative}
+/* philosophy */
+.philo{background:var(--ink);color:var(--cream);overflow:hidden;position:relative; border-radius:40px; margin:0 28px; padding:120px 0;}
+.philo .wrap{max-width:1080px;}
 .philo .eyebrow{color:var(--rose)}
 .philo .eyebrow::before{background:var(--rose)}
-.philo h2{color:var(--cream);font-size:clamp(2rem,4vw,3.1rem);font-weight:500}
-.philo .intro{max-width:760px;margin-top:24px;font-size:1.15rem;color:rgba(251,248,243,.78)}
+.philo h2{color:var(--cream);font-size:clamp(2.4rem,4vw,3.6rem);font-weight:500}
+.philo .intro{max-width:800px;margin-top:30px;font-size:1.3rem;color:rgba(251,248,243,.8); line-height:1.7;}
 .philo .intro em{font-style:italic;color:var(--rose)}
-.philo-rows{margin-top:64px;display:grid;gap:0}
-.prow{display:grid;grid-template-columns:64px 1fr;gap:30px;padding:38px 0;border-top:1px solid rgba(251,248,243,.16);align-items:start}
-.prow:last-child{border-bottom:1px solid rgba(251,248,243,.16)}
-.prow .num{font-family:'Fraunces',serif;font-style:italic;font-size:1.6rem;color:var(--rose)}
-.prow h3{color:var(--cream);font-size:1.55rem;font-weight:500;margin-bottom:12px}
-.prow p{color:rgba(251,248,243,.72);font-size:1rem;max-width:62ch}
-.philo .sprig{opacity:.13;color:var(--rose)}
-.philo .sprig-a{top:40px;right:-30px;width:300px;transform:rotate(-12deg)}
+.philo-rows{margin-top:80px;display:grid;gap:0}
+.prow{display:grid;grid-template-columns:80px 1fr;gap:40px;padding:46px 0;border-top:1px solid rgba(251,248,243,.12);align-items:start; transition:background .4s;}
+.prow:hover{background:rgba(255,255,255,.02); border-radius:16px; padding-left:20px; padding-right:20px; transform:translateX(-20px); width:calc(100% + 40px);}
+.prow:last-child{border-bottom:1px solid rgba(251,248,243,.12)}
+.prow .num{font-family:'Fraunces',serif;font-style:italic;font-size:2rem;color:var(--rose)}
+.prow h3{color:var(--cream);font-size:1.7rem;font-weight:500;margin-bottom:16px}
+.prow p{color:rgba(251,248,243,.75);font-size:1.05rem;max-width:68ch; line-height:1.8;}
+.philo .sprig{opacity:.08;color:var(--rose)}
+.philo .sprig-a{top:80px;right:-50px;width:400px;transform:rotate(-15deg)}
+.philo .sprig-b{bottom:-50px;left:-50px;width:300px;transform:rotate(40deg)}
 
 /* reviews */
-.reviews{background:linear-gradient(180deg,var(--cream-2),var(--cream))}
-.rev-top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:46px}
-.rev-score{display:flex;align-items:center;gap:18px}
-.rev-score .num{font-family:'Fraunces',serif;font-size:3.4rem;color:var(--coral);font-weight:500;line-height:1}
-.stars{color:var(--gold);font-size:1.1rem;letter-spacing:2px}
-.rev-score .meta{font-size:.82rem;color:var(--ink-soft);margin-top:4px}
-.rev-grid{columns:3;column-gap:22px}
-.quote{break-inside:avoid;background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:26px;margin-bottom:22px;transition:transform .4s var(--ease),box-shadow .4s}
-.quote:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.quote .stars{font-size:.85rem;margin-bottom:12px}
-.quote p{font-size:.93rem;color:var(--ink);line-height:1.65}
-.quote .who{margin-top:16px;display:flex;align-items:center;gap:11px}
-.quote .av{width:36px;height:36px;border-radius:50%;background:var(--sage);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem;flex:none}
-.quote .who b{font-weight:600;font-size:.86rem;display:block}
-.quote .who span{font-size:.72rem;color:var(--ink-soft)}
-.rev-more{text-align:center;margin-top:14px}
+.reviews{background:linear-gradient(180deg,var(--cream),var(--cream-2))}
+.rev-top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:60px}
+.rev-score{display:flex;align-items:center;gap:20px; background:var(--glass); padding:16px 28px; border-radius:24px; border:1px solid var(--glass-border); box-shadow:0 8px 30px rgba(0,0,0,0.04);}
+.rev-score .num{font-family:'Fraunces',serif;font-size:4rem;color:var(--coral);font-weight:500;line-height:1}
+.stars{color:var(--gold);font-size:1.2rem;letter-spacing:3px}
+.rev-score .meta{font-size:.85rem;color:var(--ink-soft);margin-top:6px; font-weight:500;}
+.rev-grid{columns:3;column-gap:28px}
+.quote{break-inside:avoid;background:var(--cream);border:1px solid var(--glass-border);border-radius:24px;padding:32px;margin-bottom:28px;transition:transform .5s var(--ease),box-shadow .5s; box-shadow:0 10px 30px rgba(0,0,0,0.02);}
+.quote:hover{transform:translateY(-8px) scale(1.02);box-shadow:var(--shadow-lg)}
+.quote .stars{font-size:.9rem;margin-bottom:16px}
+.quote p{font-size:.98rem;color:var(--ink);line-height:1.7}
+.quote .who{margin-top:20px;display:flex;align-items:center;gap:14px}
+.quote .av{width:42px;height:42px;border-radius:50%;background:var(--sage);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.9rem;flex:none}
+.quote .who b{font-weight:600;font-size:.9rem;display:block}
+.quote .who span{font-size:.76rem;color:var(--ink-soft)}
+.rev-more{text-align:center;margin-top:30px}
 
 /* contact */
-.contact{background:var(--ink);color:var(--cream)}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.contact h2{color:var(--cream);font-size:clamp(2rem,4vw,3rem);font-weight:500;margin-top:16px}
-.contact .eyebrow{color:var(--rose)}.contact .eyebrow::before{background:var(--rose)}
-.cinfo{display:grid;gap:4px;margin-top:36px}
-.cline{display:flex;gap:18px;padding:20px 0;border-top:1px solid rgba(251,248,243,.16);align-items:flex-start}
-.cline:last-child{border-bottom:1px solid rgba(251,248,243,.16)}
-.cline .ci{width:24px;color:var(--rose);flex:none;margin-top:3px}
-.cline .cl{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:rgba(251,248,243,.55)}
-.cline .cv{font-size:1.05rem;color:var(--cream);margin-top:3px}
-.cline .cv a:hover{color:var(--rose)}
-.map-card{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(251,248,243,.14)}
-.map-card iframe{width:100%;height:430px;border:0;display:block;filter:grayscale(.2)}
+.contact{background:var(--cream);color:var(--ink); padding-bottom:60px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:center; background:var(--glass); border:1px solid var(--glass-border); border-radius:40px; padding:60px; box-shadow:var(--shadow-lg);}
+.contact h2{font-size:clamp(2.4rem,4vw,3.5rem);font-weight:500;margin-top:20px}
+.cinfo{display:grid;gap:8px;margin-top:40px}
+.cline{display:flex;gap:20px;padding:24px 0;border-top:1px solid var(--line);align-items:flex-start}
+.cline:last-child{border-bottom:1px solid var(--line)}
+.cline .ci{width:28px;color:var(--coral);flex:none;margin-top:2px}
+.cline .cl{font-size:.76rem;text-transform:uppercase;letter-spacing:.18em;color:var(--ink-soft); font-weight:600;}
+.cline .cv{font-size:1.15rem;color:var(--ink);margin-top:6px; font-weight:500;}
+.cline .cv a{transition:color .3s;}
+.cline .cv a:hover{color:var(--coral)}
+.map-card{border-radius:28px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line); height:100%;}
+.map-card iframe{width:100%;height:100%;min-height:500px;border:0;display:block;filter:grayscale(.1) contrast(1.1);}
 
 /* footer */
-footer{background:var(--cream);padding:54px 0 30px}
-.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:22px;padding-bottom:30px;border-bottom:1px solid var(--line)}
-.foot .brand .bt b{font-size:1.05rem}
-.foot-links{display:flex;gap:26px;flex-wrap:wrap}
-.foot-links a{font-size:.86rem;color:var(--ink-soft);transition:color .3s}
-.foot-links a:hover{color:var(--coral)}
-.sub{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding-top:26px}
-.sub p{font-size:.78rem;color:var(--ink-soft)}
-.advon{font-size:.8rem;color:var(--ink-soft)}
-.advon a{color:var(--coral);font-weight:600}
+footer{background:var(--ink);padding:70px 0 30px; color:var(--cream);}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:30px;padding-bottom:40px;border-bottom:1px solid rgba(251,248,243,.15)}
+.foot .brand .logo circle{fill:var(--ink-soft); stroke:var(--sage);}
+.foot .brand .bt b{font-size:1.15rem; color:var(--cream);}
+.foot .brand .bt span{color:rgba(251,248,243,.6);}
+.foot-links{display:flex;gap:30px;flex-wrap:wrap}
+.foot-links a{font-size:.9rem;color:rgba(251,248,243,.8);transition:color .3s; font-weight:500;}
+.foot-links a:hover{color:var(--rose)}
+.sub{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;padding-top:30px}
+.sub p{font-size:.85rem;color:rgba(251,248,243,.6)}
+.advon{font-size:.85rem;color:rgba(251,248,243,.6)}
+.advon a{color:var(--rose);font-weight:600;letter-spacing:.02em;}
 .advon a:hover{text-decoration:underline}
 
 /* lightbox */
-.lbox{position:fixed;inset:0;z-index:90;background:rgba(33,42,37,.94);display:flex;align-items:center;justify-content:center;padding:30px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.lbox{position:fixed;inset:0;z-index:90;background:rgba(20,25,22,.96);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:30px;opacity:0;pointer-events:none;transition:opacity .5s var(--ease)}
 .lbox.open{opacity:1;pointer-events:auto}
-.lbox img{max-width:92vw;max-height:88vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5);transform:scale(.94);transition:transform .45s var(--ease)}
+.lbox img{max-width:92vw;max-height:88vh;border-radius:16px;box-shadow:0 40px 100px rgba(0,0,0,.6);transform:scale(.9);transition:transform .6s var(--ease-out-back)}
 .lbox.open img{transform:scale(1)}
-.lbox-close{position:absolute;top:24px;right:26px;background:rgba(251,248,243,.14);border:1px solid rgba(251,248,243,.3);width:48px;height:48px;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s}
-.lbox-close:hover{background:rgba(251,248,243,.28)}
+.lbox-close{position:absolute;top:30px;right:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);width:54px;height:54px;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.lbox-close:hover{background:rgba(255,255,255,.2); transform:scale(1.1);}
 
 /* responsive */
+@media (max-width:1080px){
+  .about-grid{gap:50px;}
+  .contact-grid{padding:40px; gap:50px;}
+}
 @media (max-width:960px){
   .menu{display:none}
   .burger{display:flex}
-  .hero-grid{grid-template-columns:1fr;gap:48px}
-  .hero-photo{max-width:420px;margin:0 auto}
-  .about-grid{grid-template-columns:1fr;gap:42px}
+  .hero{padding:140px 0 80px;}
+  .about-grid{grid-template-columns:1fr;gap:50px;}
+  .about-img-wrap{max-width:500px;margin:0 auto;}
+  .space-grid{grid-template-columns:1fr; gap:20px;}
+  .s-fig:nth-child(1), .s-fig:nth-child(2){transform:none; aspect-ratio:16/10;}
   .svc-grid{grid-template-columns:1fr}
+  .philo{margin:0; border-radius:0; padding:90px 20px;}
+  .prow:hover{transform:none; width:100%; padding-left:0; padding-right:0; background:transparent;}
   .rev-grid{columns:2}
-  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .contact-grid{grid-template-columns:1fr;gap:40px; padding:30px;}
+  .map-card iframe{min-height:350px;}
 }
 @media (max-width:640px){
-  .wrap{padding:0 20px}
-  .sec{padding:74px 0}
-  .hero{padding:128px 0 70px}
+  .wrap{padding:0 24px}
+  .sec{padding:90px 0}
+  .hero{padding:130px 0 60px}
   .rev-grid{columns:1}
-  .prow{grid-template-columns:1fr;gap:8px}
-  .prow .num{font-size:1.3rem}
-  .hero-photo .badge{left:0}
+  .prow{grid-template-columns:1fr;gap:12px}
+  .prow .num{font-size:1.6rem}
 }
 [lang-en]{display:none}
 html[data-lang="en"] [lang-el]{display:none}
@@ -260,28 +311,26 @@ html[data-lang="en"] [lang-en]{display:revert}
 </head>
 <body>
 
-<!-- ============ HEADER ============ -->
 <header id="hdr">
   <div class="wrap nav">
     <a href="#top" class="brand" aria-label="Χριστίνα Πανουσοπούλου">
       <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="32" cy="32" r="31" fill="#F3ECE0" stroke="#7B9279" stroke-width="1.4"/>
-        <path d="M32 50c0-10 6-15 13-17-7-1-13 2-13 8" stroke="#5D7359" stroke-width="2" stroke-linecap="round"/>
-        <path d="M32 50c0-10-6-15-13-17 7-1 13 2 13 8" stroke="#7B9279" stroke-width="2" stroke-linecap="round"/>
-        <path d="M32 50V30" stroke="#5D7359" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="32" cy="24" r="6.5" fill="#C76B52"/>
-        <circle cx="29.6" cy="22.5" r="1.1" fill="#FBF8F3"/>
-        <circle cx="34.4" cy="22.5" r="1.1" fill="#FBF8F3"/>
-        <path d="M30 26.4c1.2 1 2.8 1 4 0" stroke="#FBF8F3" stroke-width="1.1" stroke-linecap="round"/>
+        <circle cx="32" cy="32" r="31" fill="var(--cream-2)" stroke="var(--sage)" stroke-width="1.4"/>
+        <path d="M25 48c0-7-4-13-10-15 4-2 9-1 13 1" stroke="var(--sage-deep)" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="21" cy="24" r="5" stroke="var(--sage-deep)" stroke-width="2.2"/>
+        <path d="M21 19c-3 0-5 2-5 4" stroke="var(--sage)" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M43 48c0-5 3-9 7-11-2-1-5-1-8 0" stroke="var(--coral)" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="46" cy="31" r="4.5" stroke="var(--coral)" stroke-width="2.2"/>
+        <path d="M30 48c0-5 2-9 6-11 3-2 7-2 10 0" stroke="var(--rose)" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
       </svg>
       <span class="bt"><b>Χ. Πανουσοπούλου</b><span lang-el>Παιδίατρος · Νεογνολόγος</span><span lang-en>Pediatrician · Neonatologist</span></span>
     </a>
     <nav class="menu">
       <a class="lnk" href="#about"><span lang-el>Η Ιατρός</span><span lang-en>The Doctor</span></a>
+      <a class="lnk" href="#space"><span lang-el>Ο Χώρος</span><span lang-en>Clinic</span></a>
       <a class="lnk" href="#services"><span lang-el>Υπηρεσίες</span><span lang-en>Services</span></a>
       <a class="lnk" href="#philosophy"><span lang-el>Φιλοσοφία</span><span lang-en>Philosophy</span></a>
       <a class="lnk" href="#reviews"><span lang-el>Κριτικές</span><span lang-en>Reviews</span></a>
-      <a class="lnk" href="#contact"><span lang-el>Επικοινωνία</span><span lang-en>Contact</span></a>
       <div class="lang">
         <button data-lang="el" class="on">EL</button>
         <button data-lang="en">EN</button>
@@ -292,11 +341,10 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </header>
 
-<!-- mobile nav -->
 <div class="mnav" id="mnav">
   <div class="mnav-top">
     <div class="brand">
-      <svg class="logo" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="31" fill="#F3ECE0" stroke="#7B9279" stroke-width="1.4"/><path d="M32 50c0-10 6-15 13-17-7-1-13 2-13 8" stroke="#5D7359" stroke-width="2" stroke-linecap="round"/><path d="M32 50c0-10-6-15-13-17 7-1 13 2 13 8" stroke="#7B9279" stroke-width="2" stroke-linecap="round"/><path d="M32 50V30" stroke="#5D7359" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="24" r="6.5" fill="#C76B52"/></svg>
+      <svg class="logo" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="31" fill="#F3ECE0" stroke="#7B9279" stroke-width="1.4"/><path d="M25 48c0-7-4-13-10-15 4-2 9-1 13 1" stroke="#5D7359" stroke-width="2.2" stroke-linecap="round"/><circle cx="21" cy="24" r="5" stroke="#5D7359" stroke-width="2.2"/><path d="M43 48c0-5 3-9 7-11-2-1-5-1-8 0" stroke="#C76B52" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="31" r="4.5" stroke="#C76B52" stroke-width="2.2"/><path d="M30 48c0-5 2-9 6-11 3-2 7-2 10 0" stroke="#D49A8C" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/></svg>
       <span class="bt"><b>Χ. Πανουσοπούλου</b></span>
     </div>
     <button class="mnav-close" id="mclose" aria-label="Close menu">
@@ -305,6 +353,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
   <nav class="mnav-links">
     <a href="#about"><span lang-el>Η Ιατρός</span><span lang-en>The Doctor</span></a>
+    <a href="#space"><span lang-el>Ο Χώρος Μας</span><span lang-en>Our Clinic</span></a>
     <a href="#services"><span lang-el>Υπηρεσίες</span><span lang-en>Services</span></a>
     <a href="#philosophy"><span lang-el>Φιλοσοφία</span><span lang-en>Philosophy</span></a>
     <a href="#reviews"><span lang-el>Κριτικές</span><span lang-en>Reviews</span></a>
@@ -319,104 +368,96 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </div>
 
-<!-- ============ HERO ============ -->
 <main id="top">
 <section class="hero">
-  <svg class="sprig sprig-1" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <svg class="sprig sprig-1 float" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
     <path d="M60 200V40" stroke-linecap="round"/>
     <path d="M60 150c-22-4-34-22-34-44 22 4 34 22 34 44z" fill="currentColor" fill-opacity=".14"/>
     <path d="M60 110c22-4 34-22 34-44-22 4-34 22-34 44z" fill="currentColor" fill-opacity=".14"/>
     <ellipse cx="60" cy="30" rx="13" ry="20" fill="currentColor" fill-opacity=".22"/>
-    <path d="M52 26c3 6 13 6 16 0" stroke-linecap="round"/>
   </svg>
-  <svg class="sprig sprig-2" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
+  <svg class="sprig sprig-2 float-alt" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
     <path d="M60 200V40" stroke-linecap="round"/>
     <path d="M60 150c-22-4-34-22-34-44 22 4 34 22 34 44z" fill="currentColor" fill-opacity=".16"/>
     <ellipse cx="60" cy="30" rx="13" ry="20" fill="currentColor" fill-opacity=".24"/>
   </svg>
-  <div class="wrap hero-grid">
-    <div class="hero-copy reveal">
-      <span class="eyebrow"><span lang-el>Παιδίατρος · Νεογνολόγος · Περιστέρι</span><span lang-en>Pediatrician · Neonatologist · Peristeri</span></span>
-      <h1 lang-el>Η πρώτη ανάσα <em>αξίζει</em> την πιο έμπειρη φροντίδα.</h1>
-      <h1 lang-en>The first breath <em>deserves</em> the most experienced care.</h1>
-      <p class="lede" lang-el>Η Χριστίνα Πανουσοπούλου συνδυάζει την εμπειρία της Μονάδας Εντατικής Νεογνών με τη ζεστασιά του οικογενειακού ιατρείου — δίπλα στο παιδί σας από την πρώτη μέρα έως την εφηβεία.</p>
-      <p class="lede" lang-en>Christina Panousopoulou brings the rigor of the Neonatal Intensive Care Unit together with the warmth of a family practice — beside your child from day one through adolescence.</p>
-      <div class="hero-tags">
-        <span class="tag" lang-el>Νεογνολογία &amp; Προωρότητα</span><span class="tag" lang-en>Neonatology &amp; Prematurity</span>
-        <span class="tag" lang-el>Υποστήριξη Θηλασμού</span><span class="tag" lang-en>Breastfeeding Support</span>
-        <span class="tag" lang-el>Ανώδυνοι Εμβολιασμοί</span><span class="tag" lang-en>Pain-free Vaccinations</span>
-      </div>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary"><span lang-el>Κλείστε Ραντεβού</span><span lang-en>Book an Appointment</span></a>
-        <a href="#services" class="btn-ghost"><span lang-el>Οι Υπηρεσίες</span><span lang-en>Our Services</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
+
+  <div class="wrap hero-content reveal" data-parallax="0.3">
+    <div class="hero-tags">
+      <span class="tag" lang-el>Νεογνολογία & Προωρότητα</span><span class="tag" lang-en>Neonatology & Prematurity</span>
+      <span class="tag" lang-el>Υποστήριξη Θηλασμού</span><span class="tag" lang-en>Breastfeeding Support</span>
+      <span class="tag" lang-el>Ανώδυνοι Εμβολιασμοί</span><span class="tag" lang-en>Pain-free Vaccinations</span>
     </div>
-    <div class="hero-photo reveal">
-      <div class="frame zoom" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-27-537.jpg">
-        <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-27-537.jpg" alt="Χριστίνα Πανουσοπούλου, Παιδίατρος Νεογνολόγος">
-      </div>
-      <div class="badge">
-        <div class="n">15+</div>
-        <div class="l"><span lang-el>χρόνια κλινικής εμπειρίας στην παιδική &amp; νεογνική υγεία</span><span lang-en>years of clinical experience in child &amp; neonatal health</span></div>
-      </div>
+    <span class="eyebrow" style="margin-top:20px;"><span lang-el>Παιδίατρος · Νεογνολόγος · Περιστέρι</span><span lang-en>Pediatrician · Neonatologist · Peristeri</span></span>
+    <h1 lang-el>Η πρώτη ανάσα <em>αξίζει</em> την πιο έμπειρη φροντίδα.</h1>
+    <h1 lang-en>The first breath <em>deserves</em> the most experienced care.</h1>
+    <p class="lede" lang-el>Η Χριστίνα Πανουσοπούλου συνδυάζει την εμπειρία της Μονάδας Εντατικής Νεογνών με τη ζεστασιά του οικογενειακού ιατρείου — δίπλα στο παιδί σας από την πρώτη μέρα έως την εφηβεία.</p>
+    <p class="lede" lang-en>Christina Panousopoulou brings the rigor of the Neonatal Intensive Care Unit together with the warmth of a family practice — beside your child from day one through adolescence.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary"><span lang-el>Κλείστε Ραντεβού</span><span lang-en>Book an Appointment</span></a>
+      <a href="#about" class="btn-ghost"><span lang-el>Γνωρίστε την Ιατρό</span><span lang-en>Meet the Doctor</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- strip -->
-<div class="strip" aria-hidden="true">
-  <div class="strip-track">
-    <span lang-el>Αγία Σοφία · Μ.Ε.Ν.Ν. · Ιατρική Ιωαννίνων · Πρόωρα Νεογνά · Μητρικός Θηλασμός · Έρευνα RSV · Επείγουσα Παιδιατρική · </span>
-    <span lang-el>Αγία Σοφία · Μ.Ε.Ν.Ν. · Ιατρική Ιωαννίνων · Πρόωρα Νεογνά · Μητρικός Θηλασμός · Έρευνα RSV · Επείγουσα Παιδιατρική · </span>
-    <span lang-en>Agia Sophia · NICU · Ioannina Medical School · Preterm Newborns · Breastfeeding · RSV Research · Emergency Pediatrics · </span>
-    <span lang-en>Agia Sophia · NICU · Ioannina Medical School · Preterm Newborns · Breastfeeding · RSV Research · Emergency Pediatrics · </span>
-  </div>
-</div>
-
-<!-- ============ ABOUT ============ -->
 <section class="sec about" id="about">
   <div class="wrap about-grid">
-    <div class="about-imgs reveal">
-      <figure class="zoom" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_18-59-17-188.jpg">
-        <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_18-59-17-188.jpg" alt="Χώρος αναμονής ιατρείου">
-      </figure>
-      <figure class="zoom" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-25-510.jpg">
-        <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-25-510.jpg" alt="Εξεταστήριο παιδιατρικού ιατρείου">
-      </figure>
-      <figure class="zoom" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-27-537.jpg">
-        <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-27-537.jpg" alt="Η ιατρός στο γραφείο της">
-      </figure>
+    <div class="about-img-wrap reveal-left" data-parallax="0.1">
+      <div class="bg-shape"></div>
+      <div class="frame zoom" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-27-537.jpg">
+        <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-27-537.jpg" alt="Χριστίνα Πανουσοπούλου, Παιδίατρος Νεογνολόγος">
+      </div>
     </div>
-    <div class="about-body reveal">
+    <div class="about-body reveal-right">
       <span class="eyebrow"><span lang-el>Η Ιατρός</span><span lang-en>The Doctor</span></span>
       <h2 lang-el>Επιστήμη με ανθρώπινο πρόσωπο.</h2>
       <h2 lang-en>Science with a human face.</h2>
       <div lang-el>
-        <p>Η <strong>Χριστίνα Πανουσοπούλου</strong> είναι Ειδική Παιδίατρος – Νεογνολόγος, με ιδιωτικό ιατρείο στο Περιστέρι. Απόφοιτος της Ιατρικής Σχολής του Πανεπιστημίου Ιωαννίνων, ολοκλήρωσε την ειδικότητά της στο Νοσοκομείο Παίδων «Η Αγία Σοφία».</p>
+        <p>Η <strong>Χριστίνα Πανουσοπούλου</strong> είναι Ειδική Παιδίατρος – Νεογνολόγος. Απόφοιτος της Ιατρικής Σχολής του Πανεπιστημίου Ιωαννίνων, ολοκλήρωσε την ειδικότητά της στο Νοσοκομείο Παίδων «Η Αγία Σοφία».</p>
         <p>Αναγνωρίζοντας τις λεπτές ανάγκες των πρώτων ημερών της ζωής, εξειδικεύτηκε στη <strong>Νεογνολογία</strong> στη Β΄ Μονάδα Εντατικής Νοσηλείας Νεογνών (Μ.Ε.Ν.Ν.) του ίδιου νοσοκομείου. Το ενδιαφέρον της παραμένει σταθερά στην αιχμή της σύγχρονης παιδιατρικής — από την καρδιοαναπνευστική αναζωογόνηση έως την κλινική έρευνα για τον ιό RSV στα πρόωρα νεογνά.</p>
-        <p>Στο ιατρείο της, η άρτια επιστημονική κατάρτιση συναντά μια βαθιά ευαισθησία για το παιδί. Θερμή υποστηρίκτρια του μητρικού θηλασμού, στέκεται δίπλα στους γονείς από την πρώτη κιόλας ημέρα της γέννησης.</p>
+        <p>Στο ιατρείο της στο Περιστέρι, η άρτια επιστημονική κατάρτιση συναντά μια βαθιά ευαισθησία για το παιδί. Θερμή υποστηρίκτρια του μητρικού θηλασμού, στέκεται δίπλα στους γονείς από την πρώτη κιόλας ημέρα.</p>
       </div>
       <div lang-en>
-        <p><strong>Christina Panousopoulou</strong> is a board-certified Pediatrician – Neonatologist with a private practice in Peristeri. A graduate of the University of Ioannina Medical School, she completed her specialty at the "Agia Sophia" Children's Hospital.</p>
+        <p><strong>Christina Panousopoulou</strong> is a board-certified Pediatrician – Neonatologist. A graduate of the University of Ioannina Medical School, she completed her specialty at the "Agia Sophia" Children's Hospital.</p>
         <p>Drawn to the delicate needs of life's first days, she sub-specialized in <strong>Neonatology</strong> at the 2nd Neonatal Intensive Care Unit (NICU) of the same hospital. Her focus stays at the frontier of modern pediatrics — from cardiopulmonary resuscitation to clinical research on RSV in preterm newborns.</p>
-        <p>In her practice, rigorous science meets a deep sensitivity toward the child. A warm advocate of breastfeeding, she stands beside parents from the very first day of birth.</p>
+        <p>In her Peristeri practice, rigorous science meets a deep sensitivity toward the child. A warm advocate of breastfeeding, she stands beside parents from the very first day.</p>
       </div>
       <div class="credentials">
-        <div class="cred"><span class="y" lang-el>Σπουδές</span><span class="y" lang-en>Education</span><span class="t" lang-el>Ιατρική Σχολή, Πανεπιστήμιο Ιωαννίνων</span><span class="t" lang-en>Medical School, University of Ioannina</span></div>
+        <div class="cred"><span class="y" lang-el>Εμπειρία</span><span class="y" lang-en>Experience</span><span class="t" lang-el>15+ χρόνια κλινικής προϋπηρεσίας</span><span class="t" lang-en>15+ years of clinical service</span></div>
         <div class="cred"><span class="y" lang-el>Ειδικότητα</span><span class="y" lang-en>Residency</span><span class="t" lang-el>Παιδιατρική — Νοσοκομείο Παίδων «Η Αγία Σοφία»</span><span class="t" lang-en>Pediatrics — "Agia Sophia" Children's Hospital</span></div>
         <div class="cred"><span class="y" lang-el>Εξειδίκευση</span><span class="y" lang-en>Sub-specialty</span><span class="t" lang-el>Νεογνολογία — Β΄ Μ.Ε.Ν.Ν.</span><span class="t" lang-en>Neonatology — 2nd NICU</span></div>
-        <div class="cred"><span class="y" lang-el>Έρευνα</span><span class="y" lang-en>Research</span><span class="t" lang-el>Επίδραση RSV σε πρόωρα νεογνά (32–35w) &amp; εμβόλιο Synagis</span><span class="t" lang-en>Effect of RSV on preterm newborns (32–35w) &amp; Synagis vaccine</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
+<section class="sec space-sec" id="space">
+  <div class="wrap">
+    <div class="sec-head center-head reveal">
+      <span class="eyebrow"><span lang-el>Περιβάλλον</span><span lang-en>Environment</span></span>
+      <h2 lang-el>Ο Χώρος Μας</h2>
+      <h2 lang-en>Our Clinic</h2>
+      <p lang-el>Ένα σύγχρονο, φιλόξενο ιατρείο σχεδιασμένο με ηρεμία και υψηλή αισθητική, για να νιώθουν άνετα οι μικροί μας φίλοι και οι γονείς τους.</p>
+      <p lang-en>A modern, welcoming practice designed with calm and high aesthetics, ensuring our little friends and their parents feel at ease.</p>
+    </div>
+    <div class="space-grid">
+      <figure class="s-fig zoom reveal delay-1" data-parallax="0.1" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_18-59-17-188.jpg">
+        <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_18-59-17-188.jpg" alt="Χώρος αναμονής ιατρείου">
+      </figure>
+      <figure class="s-fig zoom reveal delay-2" data-parallax="-0.1" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-25-510.jpg">
+        <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-25-510.jpg" alt="Εξεταστήριο παιδιατρικού ιατρείου">
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section class="sec services" id="services">
   <div class="wrap">
-    <div class="sec-head reveal">
+    <div class="sec-head center-head reveal">
       <span class="eyebrow"><span lang-el>Υπηρεσίες</span><span lang-en>Services</span></span>
       <h2 lang-el>Φροντίδα για κάθε στάδιο της ανάπτυξης.</h2>
       <h2 lang-en>Care for every stage of growth.</h2>
@@ -424,50 +465,49 @@ html[data-lang="en"] [lang-en]{display:revert}
       <p lang-en>From the intensive care unit to the first day of school and adolescence — comprehensive care that grows alongside your child.</p>
     </div>
     <div class="svc-grid">
-      <article class="card reveal">
+      <article class="card reveal delay-1">
         <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M24 42c8-4 14-10 14-20V12l-14-4-14 4v10c0 10 6 16 14 20z"/>
           <path d="M19 23l3.5 3.5L30 19"/>
         </svg>
-        <h3 lang-el>Νεογνολογία, Προωρότητα &amp; Θηλασμός</h3>
-        <h3 lang-en>Neonatology, Prematurity &amp; Breastfeeding</h3>
-        <p lang-el>Οι πρώτες εβδομάδες είναι καθοριστικές. Με πολυετή εμπειρία στην εντατική νεογνών, προσφέρω εξειδικευμένη παρακολούθηση και ασφάλεια από την πρώτη μέρα.</p>
-        <p lang-en>The first weeks are decisive. With years of NICU experience, I offer specialized monitoring and reassurance from day one.</p>
+        <h3 lang-el>Νεογνολογία, Προωρότητα & Θηλασμός</h3>
+        <h3 lang-en>Neonatology, Prematurity & Breastfeeding</h3>
+        <p lang-el>Με πολυετή εμπειρία στην εντατική νεογνών, προσφέρω εξειδικευμένη παρακολούθηση και ασφάλεια από την πρώτη μέρα.</p>
+        <p lang-en>With years of NICU experience, I offer specialized monitoring and reassurance from day one.</p>
         <ul>
           <li lang-el>Παρακολούθηση νεογνών</li><li lang-en>Newborn monitoring</li>
-          <li lang-el>Αντιμετώπιση προβλημάτων προωρότητας</li><li lang-en>Management of prematurity</li>
-          <li lang-el>Υποστήριξη μητρικού θηλασμού</li><li lang-en>Breastfeeding support</li>
-          <li lang-el>Συμβουλευτική μελλουσών μητέρων</li><li lang-en>Counseling for expectant mothers</li>
-          <li lang-el>Κατ' οίκον επισκέψεις σε νεογέννητα</li><li lang-en>Home visits for newborns</li>
+          <li lang-el>Αντιμετώπιση προωρότητας</li><li lang-en>Management of prematurity</li>
+          <li lang-el>Υποστήριξη θηλασμού</li><li lang-en>Breastfeeding support</li>
+          <li lang-el>Κατ' οίκον επισκέψεις</li><li lang-en>Home visits for newborns</li>
         </ul>
       </article>
-      <article class="card reveal">
+      <article class="card reveal delay-2">
         <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M24 8v32M8 24h32"/>
           <circle cx="24" cy="24" r="17"/>
         </svg>
-        <h3 lang-el>Προληπτική Παιδιατρική &amp; Ανάπτυξη</h3>
-        <h3 lang-en>Preventive Pediatrics &amp; Development</h3>
-        <p lang-el>Στόχος μας η θωράκιση της υγείας σε κάθε αναπτυξιακό στάδιο, με έγκυρη ψυχοκινητική εκτίμηση και εμβολιασμούς με σύγχρονες, ανώδυνες τεχνικές.</p>
-        <p lang-en>Our goal is to protect your child's health at every stage, with sound psychomotor assessment and modern, pain-free vaccinations.</p>
+        <h3 lang-el>Προληπτική Παιδιατρική & Ανάπτυξη</h3>
+        <h3 lang-en>Preventive Pediatrics & Development</h3>
+        <p lang-el>Στόχος μας η θωράκιση της υγείας με έγκυρη ψυχοκινητική εκτίμηση και εμβολιασμούς με σύγχρονες, ανώδυνες τεχνικές.</p>
+        <p lang-en>Our goal is to protect health with sound psychomotor assessment and modern, pain-free vaccinations.</p>
         <ul>
-          <li lang-el>Παρακολούθηση σωστής ανάπτυξης</li><li lang-en>Healthy-growth monitoring</li>
-          <li lang-el>Πρόληψη &amp; αντιμετώπιση ασθενειών</li><li lang-en>Disease prevention &amp; treatment</li>
+          <li lang-el>Έλεγχος σωστής ανάπτυξης</li><li lang-en>Healthy-growth tracking</li>
+          <li lang-el>Πρόληψη & αντιμετώπιση ασθενειών</li><li lang-en>Disease prevention & treatment</li>
           <li lang-el>Ψυχοκινητική εκτίμηση</li><li lang-en>Psychomotor assessment</li>
           <li lang-el>Ανώδυνοι εμβολιασμοί</li><li lang-en>Pain-free vaccinations</li>
         </ul>
       </article>
-      <article class="card reveal">
+      <article class="card reveal delay-3">
         <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M24 40s-14-8-14-19a8 8 0 0 1 14-5 8 8 0 0 1 14 5c0 11-14 19-14 19z"/>
         </svg>
-        <h3 lang-el>Διατροφή, Εφηβεία &amp; Γονείς</h3>
-        <h3 lang-en>Nutrition, Adolescence &amp; Parents</h3>
-        <p lang-el>Η σωστή σχέση με το φαγητό χτίζεται από βρέφος. Προσφέρω επιστημονική ενημέρωση, παρακολούθηση εφήβων και σταθερή υποστήριξη στους γονείς.</p>
-        <p lang-en>A healthy relationship with food begins in infancy. I provide evidence-based guidance, adolescent care, and steady support for parents.</p>
+        <h3 lang-el>Διατροφή, Εφηβεία & Γονείς</h3>
+        <h3 lang-en>Nutrition, Adolescence & Parents</h3>
+        <p lang-el>Η σωστή σχέση με το φαγητό χτίζεται από βρέφος. Προσφέρω επιστημονική ενημέρωση και σταθερή υποστήριξη στους γονείς.</p>
+        <p lang-en>A healthy relationship with food begins in infancy. I provide evidence-based guidance and steady parental support.</p>
         <ul>
           <li lang-el>Ενημέρωση παιδικής διατροφής</li><li lang-en>Child-nutrition guidance</li>
-          <li lang-el>Αντιμετώπιση διατροφικών διαταραχών</li><li lang-en>Eating-disorder care</li>
+          <li lang-el>Αντιμετώπιση διατροφικών θεμάτων</li><li lang-en>Eating habits care</li>
           <li lang-el>Παρακολούθηση εφήβων</li><li lang-en>Adolescent monitoring</li>
           <li lang-el>Συμβουλευτική γονέων</li><li lang-en>Parental counseling</li>
         </ul>
@@ -476,143 +516,144 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </section>
 
-<!-- ============ PHILOSOPHY ============ -->
-<section class="sec philo" id="philosophy">
-  <svg class="sprig sprig-a" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
-    <path d="M60 200V40" stroke-linecap="round"/>
-    <path d="M60 150c-22-4-34-22-34-44 22 4 34 22 34 44z" fill="currentColor" fill-opacity=".5"/>
-    <path d="M60 110c22-4 34-22 34-44-22 4-34 22-34 44z" fill="currentColor" fill-opacity=".5"/>
-    <ellipse cx="60" cy="30" rx="13" ry="20" fill="currentColor" fill-opacity=".6"/>
-  </svg>
-  <div class="wrap">
-    <div class="reveal">
-      <span class="eyebrow"><span lang-el>Η Νεογνολογική Ματιά</span><span lang-en>The Neonatologist's Eye</span></span>
-      <h2 lang-el>Από τη Μονάδα Εντατικής στην αγκαλιά της μητέρας.</h2>
-      <h2 lang-en>From intensive care to a mother's embrace.</h2>
-      <p class="intro" lang-el>Όταν ένας γονέας αναζητά παιδίατρο, σκέφτεται τις ιώσεις και τα εμβόλια. Όμως η δική μου ταυτότητα διαμορφώθηκε σε ένα πιο απαιτητικό περιβάλλον: τη Μ.Ε.Ν.Ν. της «Αγίας Σοφίας». Έχω μάθει να κοιτάζω το παιδί σας μέσα από ένα φίλτρο <em>απόλυτης κλινικής εγρήγορσης</em>.</p>
-      <p class="intro" lang-en>When parents look for a pediatrician, they think of colds and vaccines. But my identity was shaped in a far more demanding place: the NICU at "Agia Sophia." I've learned to see your child through a lens of <em>absolute clinical alertness</em>.</p>
-    </div>
-    <div class="philo-rows">
-      <div class="prow reveal">
-        <div class="num">01</div>
-        <div>
-          <h3 lang-el>Η εμπειρία της προωρότητας</h3>
-          <h3 lang-en>The experience of prematurity</h3>
-          <p lang-el>Ένα πρόωρο μωρό (όπως τα νεογνά 32–35w που μελέτησα στην έρευνα για τον RSV) δεν είναι απλώς ένα «μικρότερο» μωρό· έχει ένα εντελώς διαφορετικό, ευαίσθητο αναπνευστικό και ανοσοποιητικό σύστημα. Η θητεία μου στην εντατική μού επιτρέπει να προλαμβάνω άμεσα κάθε επιπλοκή.</p>
-          <p lang-en>A preterm baby (like the 32–35w newborns I studied in RSV research) is not simply a "smaller" baby; it has an entirely different, fragile respiratory and immune system. My time in intensive care lets me anticipate any complication early.</p>
-        </div>
+<section class="sec" id="philosophy" style="padding-top:20px;">
+  <div class="philo">
+    <svg class="sprig sprig-a float" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M60 200V40" stroke-linecap="round"/>
+      <path d="M60 150c-22-4-34-22-34-44 22 4 34 22 34 44z" fill="currentColor" fill-opacity=".5"/>
+      <ellipse cx="60" cy="30" rx="13" ry="20" fill="currentColor" fill-opacity=".6"/>
+    </svg>
+    <svg class="sprig sprig-b float-alt" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M60 200V40" stroke-linecap="round"/>
+      <path d="M60 110c22-4 34-22 34-44-22 4-34 22-34 44z" fill="currentColor" fill-opacity=".5"/>
+    </svg>
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span lang-el>Η Νεογνολογική Ματιά</span><span lang-en>The Neonatologist's Eye</span></span>
+        <h2 lang-el>Από τη Μονάδα Εντατικής στην αγκαλιά της μητέρας.</h2>
+        <h2 lang-en>From intensive care to a mother's embrace.</h2>
+        <p class="intro" lang-el>Όταν ένας γονέας αναζητά παιδίατρο, σκέφτεται τις ιώσεις και τα εμβόλια. Όμως η δική μου ταυτότητα διαμορφώθηκε σε ένα πιο απαιτητικό περιβάλλον: τη Μ.Ε.Ν.Ν. της «Αγίας Σοφίας». Έχω μάθει να κοιτάζω το παιδί σας μέσα από ένα φίλτρο <em>απόλυτης κλινικής εγρήγορσης</em>.</p>
+        <p class="intro" lang-en>When parents look for a pediatrician, they think of colds and vaccines. But my identity was shaped in a far more demanding place: the NICU at "Agia Sophia." I've learned to see your child through a lens of <em>absolute clinical alertness</em>.</p>
       </div>
-      <div class="prow reveal">
-        <div class="num">02</div>
-        <div>
-          <h3 lang-el>Η ετοιμότητα του επείγοντος</h3>
-          <h3 lang-en>Readiness for the urgent</h3>
-          <p lang-el>Με εξειδικευμένα σεμινάρια επείγουσας παιδιατρικής και καρδιοαναπνευστικής αναζωογόνησης, έχω εκπαιδευτεί να λειτουργώ με απόλυτη ψυχραιμία στις οριακές στιγμές. Στο ιατρείο μου, τίποτα δεν αφήνεται στην τύχη — κάθε διάγνωση βασίζεται σε αυστηρά επιστημονικά δεδομένα.</p>
-          <p lang-en>With specialized training in emergency pediatrics and cardiopulmonary resuscitation, I'm prepared to act with complete composure in critical moments. In my practice, nothing is left to chance — every diagnosis rests on rigorous evidence.</p>
+      <div class="philo-rows">
+        <div class="prow reveal">
+          <div class="num">01</div>
+          <div>
+            <h3 lang-el>Η εμπειρία της προωρότητας</h3>
+            <h3 lang-en>The experience of prematurity</h3>
+            <p lang-el>Ένα πρόωρο μωρό δεν είναι απλώς ένα «μικρότερο» μωρό· έχει ένα εντελώς διαφορετικό, ευαίσθητο αναπνευστικό και ανοσοποιητικό σύστημα. Η θητεία μου στην εντατική μού επιτρέπει να προλαμβάνω άμεσα κάθε επιπλοκή.</p>
+            <p lang-en>A preterm baby is not simply a "smaller" baby; it has an entirely different, fragile respiratory and immune system. My time in intensive care lets me anticipate any complication early.</p>
+          </div>
         </div>
-      </div>
-      <div class="prow reveal">
-        <div class="num">03</div>
-        <div>
-          <h3 lang-el>Ο θηλασμός ως ασπίδα υγείας</h3>
-          <h3 lang-en>Breastfeeding as a shield</h3>
-          <p lang-el>Ο μητρικός θηλασμός δεν είναι απλώς μια επιλογή διατροφής· είναι η πρώτη και πιο ισχυρή θωράκιση του νεογνού. Ως ομιλήτρια σε ημερίδες θηλασμού, στέκομαι πρακτικά δίπλα σε κάθε μητέρα, λύνω τις απορίες της και προσφέρω την καθοδήγηση που χρειάζεται.</p>
-          <p lang-en>Breastfeeding is more than a feeding choice; it is the newborn's first and strongest protection. As a speaker at breastfeeding conferences, I stand practically beside every mother, answering her questions and offering the guidance she needs.</p>
+        <div class="prow reveal">
+          <div class="num">02</div>
+          <div>
+            <h3 lang-el>Η ετοιμότητα του επείγοντος</h3>
+            <h3 lang-en>Readiness for the urgent</h3>
+            <p lang-el>Εκπαιδευμένη στην επείγουσα παιδιατρική και καρδιοαναπνευστική αναζωογόνηση, λειτουργώ με απόλυτη ψυχραιμία στις οριακές στιγμές. Τίποτα δεν αφήνεται στην τύχη — κάθε διάγνωση βασίζεται σε αυστηρά δεδομένα.</p>
+            <p lang-en>Trained in emergency pediatrics and cardiopulmonary resuscitation, I act with complete composure in critical moments. Nothing is left to chance — every diagnosis rests on rigorous evidence.</p>
+          </div>
+        </div>
+        <div class="prow reveal">
+          <div class="num">03</div>
+          <div>
+            <h3 lang-el>Ο θηλασμός ως ασπίδα υγείας</h3>
+            <h3 lang-en>Breastfeeding as a shield</h3>
+            <p lang-el>Ο μητρικός θηλασμός είναι η πρώτη και πιο ισχυρή θωράκιση του νεογνού. Στέκομαι πρακτικά δίπλα σε κάθε μητέρα, λύνω τις απορίες της και προσφέρω την καθοδήγηση που χρειάζεται για αυτό το ταξίδι.</p>
+            <p lang-en>Breastfeeding is the newborn's first and strongest protection. I stand practically beside every mother, answering her questions and offering the guidance needed for this journey.</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ REVIEWS ============ -->
 <section class="sec reviews" id="reviews">
   <div class="wrap">
     <div class="rev-top reveal">
       <div>
         <span class="eyebrow"><span lang-el>Κριτικές Γονέων</span><span lang-en>Parent Reviews</span></span>
-        <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:500;margin-top:16px" lang-el>Η εμπιστοσύνη που χτίζεται με τα χρόνια.</h2>
-        <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:500;margin-top:16px" lang-en>Trust built over the years.</h2>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:500;margin-top:16px" lang-el>Η εμπιστοσύνη που χτίζεται με τα χρόνια.</h2>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:500;margin-top:16px" lang-en>Trust built over the years.</h2>
       </div>
-      <div class="rev-score">
+      <div class="rev-score float">
         <div class="num">5.0</div>
         <div>
           <div class="stars">★★★★★</div>
-          <div class="meta" lang-el>Αξιολογήσεις από γονείς στο Google</div>
-          <div class="meta" lang-en>Parent reviews on Google</div>
+          <div class="meta" lang-el>Αξιολογήσεις στο Google</div>
+          <div class="meta" lang-en>Google Reviews</div>
         </div>
       </div>
     </div>
     <div class="rev-grid">
-      <div class="quote reveal"><div class="stars">★★★★★</div><p lang-el>Είναι η παιδίατρός μας από τότε που γεννήθηκε το παιδί μας — 11 χρόνια στο πλευρό μας, πάντα διαθέσιμη, ακόμη και τηλεφωνικά. Άριστη επιστημονική κατάρτιση, ποτέ καμία αστοχία σε διάγνωση. Έχει την ικανότητα να μεταδίδει την ψυχραιμία της στον γονιό. Της έχουμε απόλυτη εμπιστοσύνη.</p><p lang-en>She has been our pediatrician since our child was born — 11 years by our side, always available, even by phone. Excellent scientific training, never a single misdiagnosis. She has the gift of passing her calm on to the parent. We trust her completely.</p><div class="who"><span class="av">O</span><div><b>Olympia Th.</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
+      <div class="quote reveal delay-1"><div class="stars">★★★★★</div><p lang-el>Είναι η παιδίατρός μας από τότε που γεννήθηκε το παιδί μας — 11 χρόνια στο πλευρό μας. Άριστη επιστημονική κατάρτιση, καμία αστοχία σε διάγνωση. Έχει την ικανότητα να μεταδίδει την ψυχραιμία της. Της έχουμε απόλυτη εμπιστοσύνη.</p><p lang-en>She has been our pediatrician since our child was born — 11 years by our side. Excellent scientific training, never a single misdiagnosis. She passes her calm on to the parent. We trust her completely.</p><div class="who"><span class="av">O</span><div><b>Olympia Th.</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
 
-      <div class="quote reveal"><div class="stars">★★★★★</div><p lang-el>Εξαιρετική επιστήμονας και άνθρωπος. Με πολλή αγάπη για τα παιδιά. Πάντα διαθέσιμη και πάντα σωστή στις διαγνώσεις της.</p><p lang-en>An exceptional scientist and person. So much love for children. Always available and always right in her diagnoses.</p><div class="who"><span class="av">Ζ</span><div><b>Ζωή Μπαρούνη</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
+      <div class="quote reveal delay-2"><div class="stars">★★★★★</div><p lang-el>Εξαιρετική επιστήμονας και άνθρωπος. Με πολλή αγάπη για τα παιδιά. Πάντα διαθέσιμη και πάντα σωστή στις διαγνώσεις της.</p><p lang-en>An exceptional scientist and person. So much love for children. Always available and always right in her diagnoses.</p><div class="who"><span class="av">Ζ</span><div><b>Ζωή Μπαρούνη</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
 
-      <div class="quote reveal"><div class="stars">★★★★★</div><p lang-el>Φοβερή γιατρός. Και τα δύο μου παιδιά την αγαπούν και δεν τη φοβούνται. Έχει τον τρόπο της με τα παιδιά!</p><p lang-en>A wonderful doctor. Both my children love her and aren't afraid of her. She has a way with kids!</p><div class="who"><span class="av">M</span><div><b>Maria Grammatikou</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
+      <div class="quote reveal delay-3"><div class="stars">★★★★★</div><p lang-el>Με μεγάλη εξειδίκευση και επιστημονική κατάρτιση, η κα Πανουσοπούλου είναι άμεση, αποτελεσματική και εμπνέει εμπιστοσύνη. Εξαιρετική παιδίατρος!</p><p lang-en>Highly specialized and scientifically thorough, she is responsive, effective and inspires confidence. An excellent pediatrician!</p><div class="who"><span class="av">N</span><div><b>Nick Sid.</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
 
-      <div class="quote reveal"><div class="stars">★★★★★</div><p lang-el>Με μεγάλη εξειδίκευση και επιστημονική κατάρτιση, η κα Πανουσοπούλου είναι άμεση, αποτελεσματική και εμπνέει εμπιστοσύνη. Εξαιρετική παιδίατρος και άνθρωπος!</p><p lang-en>Highly specialized and scientifically thorough, Ms. Panousopoulou is responsive, effective and inspires confidence. An excellent pediatrician and person!</p><div class="who"><span class="av">N</span><div><b>Nick Sid.</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
+      <div class="quote reveal delay-1"><div class="stars">★★★★★</div><p lang-el>Φοβερή γιατρός. Και τα δύο μου παιδιά την αγαπούν και δεν τη φοβούνται. Έχει τον τρόπο της με τα παιδιά!</p><p lang-en>A wonderful doctor. Both my children love her and aren't afraid of her. She has a way with kids!</p><div class="who"><span class="av">M</span><div><b>Maria Grammatikou</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
 
-      <div class="quote reveal"><div class="stars">★★★★★</div><p lang-el>Εξαιρετική γιατρός, με υψηλού επιπέδου επιστημονική κατάρτιση και αγάπη για τους μικρούς ασθενείς.</p><p lang-en>An outstanding doctor, with high-level scientific training and love for her little patients.</p><div class="who"><span class="av">M</span><div><b>Marieta Merentiti</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
+      <div class="quote reveal delay-2"><div class="stars">★★★★★</div><p lang-el>Εξαιρετική παιδίατρος με πολλή υπομονή και αγάπη για τα παιδιά!</p><p lang-en>An excellent pediatrician with great patience and love for children!</p><div class="who"><span class="av">E</span><div><b>Eleni Feka</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
 
-      <div class="quote reveal"><div class="stars">★★★★★</div><p lang-el>Εξαιρετική παιδίατρος με πολλή υπομονή και αγάπη για τα παιδιά!</p><p lang-en>An excellent pediatrician with great patience and love for children!</p><div class="who"><span class="av">E</span><div><b>Eleni Feka</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
-
-      <div class="quote reveal"><div class="stars">★★★★★</div><p lang-el>Πολύ καταρτισμένη επιστήμονας με πολλές γνώσεις, υπομονή και αγάπη για τα παιδιά. Τη συστήνω ανεπιφύλακτα!</p><p lang-en>A highly trained scientist with deep knowledge, patience and love for children. I recommend her without reservation!</p><div class="who"><span class="av">A</span><div><b>Αντώνης Αντωνίου</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
+      <div class="quote reveal delay-3"><div class="stars">★★★★★</div><p lang-el>Πολύ καταρτισμένη επιστήμονας με πολλές γνώσεις, υπομονή και αγάπη για τα παιδιά. Τη συστήνω ανεπιφύλακτα!</p><p lang-en>A highly trained scientist with deep knowledge, patience and love for children. I recommend her without reservation!</p><div class="who"><span class="av">A</span><div><b>Αντώνης Αντωνίου</b><span lang-el>Γονέας</span><span lang-en>Parent</span></div></div></div>
     </div>
     <div class="rev-more reveal">
       <a class="btn-ghost" target="_blank" rel="noopener" href="https://www.google.com/search?q=Christina+Panousopoulou+Reviews&stick=H4sIAAAAAAAAAONgkxIxNDY3NjM1MzU1NTY0MTYwNjYzMN_AyPiKUd45oyizuCQzL1EhIDEvv7Q4vyC_NCe_VCEotSwztbx4ESshFQAwa8NaXwAAAA#lkt=LocalPoiReviews">
         <span lang-el>Δείτε όλες τις κριτικές στο Google</span><span lang-en>Read all reviews on Google</span>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ============ CONTACT ============ -->
 <section class="sec contact" id="contact">
-  <div class="wrap contact-grid">
-    <div class="reveal">
-      <span class="eyebrow"><span lang-el>Επικοινωνία</span><span lang-en>Contact</span></span>
-      <h2 lang-el>Κλείστε το ραντεβού σας.</h2>
-      <h2 lang-en>Book your appointment.</h2>
-      <div class="cinfo">
-        <div class="cline">
-          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5"/></svg>
-          <div><div class="cl" lang-el>Διεύθυνση</div><div class="cl" lang-en>Address</div><div class="cv">Θεσπιών 2, 121 32, <span lang-el>Περιστέρι, Αθήνα</span><span lang-en>Peristeri, Athens</span></div></div>
-        </div>
-        <div class="cline">
-          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-3 2a14 14 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z" stroke-linejoin="round"/></svg>
-          <div><div class="cl" lang-el>Τηλέφωνα</div><div class="cl" lang-en>Phone</div><div class="cv"><a href="tel:+302015744066">210 5744 066</a> · <a href="tel:+306976611190">697 6611 190</a></div></div>
-        </div>
-        <div class="cline">
-          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6" stroke-linejoin="round"/></svg>
-          <div><div class="cl">Email</div><div class="cv"><a href="mailto:x.panousopoulou@gmail.com">x.panousopoulou@gmail.com</a></div></div>
-        </div>
-        <div class="cline">
-          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div><div class="cl" lang-el>Ωράριο</div><div class="cl" lang-en>Hours</div><div class="cv" lang-el>Δευτέρα – Παρασκευή, κατόπιν ραντεβού</div><div class="cv" lang-en>Monday – Friday, by appointment</div></div>
+  <div class="wrap">
+    <div class="contact-grid reveal">
+      <div>
+        <span class="eyebrow"><span lang-el>Επικοινωνία</span><span lang-en>Contact</span></span>
+        <h2 lang-el>Κλείστε το ραντεβού σας.</h2>
+        <h2 lang-en>Book your appointment.</h2>
+        <div class="cinfo">
+          <div class="cline">
+            <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <div><div class="cl" lang-el>Διεύθυνση</div><div class="cl" lang-en>Address</div><div class="cv">Θεσπιών 2, 121 32, <br><span lang-el>Περιστέρι, Αθήνα</span><span lang-en>Peristeri, Athens</span></div></div>
+          </div>
+          <div class="cline">
+            <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a14 14 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2z" stroke-linejoin="round"/></svg>
+            <div><div class="cl" lang-el>Τηλέφωνα</div><div class="cl" lang-en>Phone</div><div class="cv"><a href="tel:+302015744066">210 5744 066</a><br><a href="tel:+306976611190">697 6611 190</a></div></div>
+          </div>
+          <div class="cline">
+            <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6" stroke-linejoin="round"/></svg>
+            <div><div class="cl">Email</div><div class="cv"><a href="mailto:x.panousopoulou@gmail.com">x.panousopoulou@gmail.com</a></div></div>
+          </div>
+          <div class="cline">
+            <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="cl" lang-el>Ωράριο</div><div class="cl" lang-en>Hours</div><div class="cv" lang-el>Δευτέρα – Παρασκευή<br>κατόπιν ραντεβού</div><div class="cv" lang-en>Monday – Friday<br>by appointment</div></div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="map-card reveal">
-      <iframe title="Χάρτης Ιατρείου" loading="lazy" src="https://www.google.com/maps?q=Thespion+2,+Peristeri+12132,+Greece&output=embed"></iframe>
+      <div class="map-card">
+        <iframe title="Χάρτης Ιατρείου" loading="lazy" src="https://www.google.com/maps?q=Thespion+2,+Peristeri+12132,+Greece&output=embed"></iframe>
+      </div>
     </div>
   </div>
 </section>
 </main>
 
-<!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
     <div class="foot">
       <div class="brand">
-        <svg class="logo" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="31" fill="#F3ECE0" stroke="#7B9279" stroke-width="1.4"/><path d="M32 50c0-10 6-15 13-17-7-1-13 2-13 8" stroke="#5D7359" stroke-width="2" stroke-linecap="round"/><path d="M32 50c0-10-6-15-13-17 7-1 13 2 13 8" stroke="#7B9279" stroke-width="2" stroke-linecap="round"/><path d="M32 50V30" stroke="#5D7359" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="24" r="6.5" fill="#C76B52"/></svg>
+        <svg class="logo" viewBox="0 0 64 64" fill="none" width="56" height="56"><circle cx="32" cy="32" r="31" fill="#F3ECE0" stroke="#7B9279" stroke-width="1.4"/><path d="M25 48c0-7-4-13-10-15 4-2 9-1 13 1" stroke="#5D7359" stroke-width="2.2" stroke-linecap="round"/><circle cx="21" cy="24" r="5" stroke="#5D7359" stroke-width="2.2"/><path d="M43 48c0-5 3-9 7-11-2-1-5-1-8 0" stroke="#C76B52" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="31" r="4.5" stroke="#C76B52" stroke-width="2.2"/><path d="M30 48c0-5 2-9 6-11 3-2 7-2 10 0" stroke="#D49A8C" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/></svg>
         <span class="bt"><b>Χριστίνα Πανουσοπούλου</b><span lang-el>Παιδίατρος · Νεογνολόγος</span><span lang-en>Pediatrician · Neonatologist</span></span>
       </div>
       <nav class="foot-links">
         <a href="#about"><span lang-el>Η Ιατρός</span><span lang-en>Doctor</span></a>
+        <a href="#space"><span lang-el>Ο Χώρος</span><span lang-en>Clinic</span></a>
         <a href="#services"><span lang-el>Υπηρεσίες</span><span lang-en>Services</span></a>
         <a href="#philosophy"><span lang-el>Φιλοσοφία</span><span lang-en>Philosophy</span></a>
         <a href="#reviews"><span lang-el>Κριτικές</span><span lang-en>Reviews</span></a>
-        <a href="#contact"><span lang-el>Επικοινωνία</span><span lang-en>Contact</span></a>
       </nav>
     </div>
     <div class="sub">
@@ -622,10 +663,9 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </footer>
 
-<!-- lightbox -->
 <div class="lbox" id="lbox">
   <button class="lbox-close" id="lclose" aria-label="Close">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
   </button>
   <img id="limg" src="" alt="">
 </div>
@@ -661,16 +701,36 @@ html[data-lang="en"] [lang-en]{display:revert}
   });
   setLang('el');
 
-  // reveal on scroll
+  // scroll animations (Intersection Observer)
   var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-  },{threshold:.14,rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -50px 0px'});
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el){io.observe(el);});
+
+  // Parallax effect for Wow Factor
+  var parallexEls = document.querySelectorAll('[data-parallax]');
+  window.addEventListener('scroll', function() {
+    var scrolled = window.pageYOffset;
+    parallexEls.forEach(function(el) {
+      var speed = el.getAttribute('data-parallax');
+      // Only apply on desktop to save mobile performance
+      if(window.innerWidth > 960) {
+        el.style.transform = 'translateY(' + (scrolled * speed) + 'px)';
+      } else {
+        el.style.transform = 'none';
+      }
+    });
+  }, {passive: true});
 
   // lightbox
   var lbox=document.getElementById('lbox'),limg=document.getElementById('limg');
   function openL(src,alt){limg.src=src;limg.alt=alt||'';lbox.classList.add('open');document.body.style.overflow='hidden';}
-  function closeL(){lbox.classList.remove('open');document.body.style.overflow='';setTimeout(function(){limg.src='';},400);}
+  function closeL(){lbox.classList.remove('open');document.body.style.overflow='';setTimeout(function(){limg.src='';},500);}
   document.querySelectorAll('.zoom').forEach(function(z){
     z.addEventListener('click',function(){
       var src=z.getAttribute('data-src');var img=z.querySelector('img');
