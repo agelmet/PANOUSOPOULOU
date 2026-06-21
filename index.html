@@ -86,8 +86,8 @@ header.scrolled{background:var(--glass);backdrop-filter:blur(24px);-webkit-backd
 header.scrolled .nav{height:72px;}
 .brand{display:flex;align-items:center;gap:14px; transition:transform .3s;}
 .brand:hover{transform:scale(1.02);}
-.brand .logo{width:52px;height:52px;flex:none; transition:width .3s, height .3s;}
-header.scrolled .brand .logo {width:44px; height:44px;}
+.brand .logo{width:68px;height:68px;flex:none; transition:width .3s, height .3s;}
+header.scrolled .brand .logo {width:52px; height:52px;}
 .brand .bt{display:flex;flex-direction:column;line-height:1}
 .brand .bt b{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;letter-spacing:-.01em}
 .brand .bt span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sage-deep);margin-top:4px}
@@ -96,9 +96,9 @@ header.scrolled .brand .logo {width:44px; height:44px;}
 .menu a.lnk::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--coral);transition:width .4s var(--ease)}
 .menu a.lnk:hover{color:var(--ink)}
 .menu a.lnk:hover::after{width:100%}
-.lang{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;background:rgba(255,255,255,0.5);}
-.lang button{font-family:'Inter';font-size:.74rem;font-weight:600;letter-spacing:.04em;padding:5px 12px;border:0;border-radius:999px;background:transparent;color:var(--ink-soft);cursor:pointer;transition:.3s}
-.lang button.on{background:var(--ink);color:var(--cream);box-shadow:0 2px 10px rgba(0,0,0,0.1);}
+.lang{display:flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:4px;background:rgba(255,255,255,0.5);}
+.lang button{font-family:'Inter';font-size:1.2rem;line-height:1;padding:6px 10px;border:0;border-radius:999px;background:transparent;cursor:pointer;transition:all .3s ease;filter:grayscale(100%);opacity:0.5;}
+.lang button.on{filter:grayscale(0%);opacity:1;background:var(--cream);box-shadow:0 2px 10px rgba(0,0,0,0.1);}
 .cta-nav{background:var(--coral);color:#fff;padding:12px 24px;border-radius:999px;font-size:.84rem;font-weight:600;transition:all .4s var(--ease); animation: pulseGlow 3s infinite;}
 .cta-nav:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 15px 30px -10px rgba(199,107,82,.8); animation:none;}
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
@@ -112,7 +112,6 @@ header.scrolled .brand .logo {width:44px; height:44px;}
 .mnav-links{display:flex;flex-direction:column;gap:6px;margin-top:48px}
 .mnav-links a{font-family:'Fraunces',serif;font-size:2.2rem;color:var(--ink);padding:12px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(20px);transition:all .5s var(--ease)}
 .mnav.open .mnav-links a{opacity:1;transform:none}
-/* Staggering in JS or CSS for mobile nav links */
 .mnav.open .mnav-links a:nth-child(1){transition-delay:.1s}
 .mnav.open .mnav-links a:nth-child(2){transition-delay:.15s}
 .mnav.open .mnav-links a:nth-child(3){transition-delay:.2s}
@@ -120,7 +119,7 @@ header.scrolled .brand .logo {width:44px; height:44px;}
 .mnav.open .mnav-links a:nth-child(5){transition-delay:.3s}
 .mnav-foot{margin-top:auto;display:flex;flex-direction:column;gap:16px}
 .mnav-lang{display:flex;gap:8px}
-.mnav-lang button{flex:1;padding:14px;border:1px solid var(--line);border-radius:14px;background:none;font-weight:600;font-size:.9rem;cursor:pointer;color:var(--ink-soft)}
+.mnav-lang button{flex:1;padding:14px;border:1px solid var(--line);border-radius:14px;background:none;font-weight:600;font-size:1rem;cursor:pointer;color:var(--ink-soft); display:flex; align-items:center; justify-content:center; gap:8px;}
 .mnav-lang button.on{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 .mnav-cta{background:var(--coral);color:#fff;text-align:center;padding:18px;border-radius:16px;font-weight:600; font-size:1.05rem;}
 
@@ -181,8 +180,8 @@ section{position:relative}
 .space-sec::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--line);}
 .space-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:30px;align-items:center;margin-top:20px;}
 .s-fig{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);position:relative;}
-.s-fig:nth-child(1){aspect-ratio:4/3; transform:translateY(30px);}
-.s-fig:nth-child(2){aspect-ratio:3/4; transform:translateY(-30px);}
+.s-fig:nth-child(1){aspect-ratio:4/3;}
+.s-fig:nth-child(2){aspect-ratio:3/4;}
 .s-fig img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease);}
 .s-fig:hover img{transform:scale(1.05);}
 
@@ -288,7 +287,7 @@ footer{background:var(--ink);padding:70px 0 30px; color:var(--cream);}
   .about-grid{grid-template-columns:1fr;gap:50px;}
   .about-img-wrap{max-width:500px;margin:0 auto;}
   .space-grid{grid-template-columns:1fr; gap:20px;}
-  .s-fig:nth-child(1), .s-fig:nth-child(2){transform:none; aspect-ratio:16/10;}
+  .s-fig:nth-child(1), .s-fig:nth-child(2){aspect-ratio:16/10;}
   .svc-grid{grid-template-columns:1fr}
   .philo{margin:0; border-radius:0; padding:90px 20px;}
   .prow:hover{transform:none; width:100%; padding-left:0; padding-right:0; background:transparent;}
@@ -311,16 +310,20 @@ html[data-lang="en"] [lang-en]{display:revert}
 </head>
 <body>
 
+<!-- ============ HEADER ============ -->
 <header id="hdr">
   <div class="wrap nav">
     <a href="#top" class="brand" aria-label="Χριστίνα Πανουσοπούλου">
       <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="32" cy="32" r="31" fill="var(--cream-2)" stroke="var(--sage)" stroke-width="1.4"/>
+        <!-- Doctor Silhouette -->
         <path d="M25 48c0-7-4-13-10-15 4-2 9-1 13 1" stroke="var(--sage-deep)" stroke-width="2.2" stroke-linecap="round"/>
         <circle cx="21" cy="24" r="5" stroke="var(--sage-deep)" stroke-width="2.2"/>
         <path d="M21 19c-3 0-5 2-5 4" stroke="var(--sage)" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- Child Silhouette -->
         <path d="M43 48c0-5 3-9 7-11-2-1-5-1-8 0" stroke="var(--coral)" stroke-width="2.2" stroke-linecap="round"/>
         <circle cx="46" cy="31" r="4.5" stroke="var(--coral)" stroke-width="2.2"/>
+        <!-- Abstract Embrace / Caring curve -->
         <path d="M30 48c0-5 2-9 6-11 3-2 7-2 10 0" stroke="var(--rose)" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
       </svg>
       <span class="bt"><b>Χ. Πανουσοπούλου</b><span lang-el>Παιδίατρος · Νεογνολόγος</span><span lang-en>Pediatrician · Neonatologist</span></span>
@@ -332,8 +335,8 @@ html[data-lang="en"] [lang-en]{display:revert}
       <a class="lnk" href="#philosophy"><span lang-el>Φιλοσοφία</span><span lang-en>Philosophy</span></a>
       <a class="lnk" href="#reviews"><span lang-el>Κριτικές</span><span lang-en>Reviews</span></a>
       <div class="lang">
-        <button data-lang="el" class="on">EL</button>
-        <button data-lang="en">EN</button>
+        <button data-lang="el" class="on" aria-label="Ελληνικά">🇬🇷</button>
+        <button data-lang="en" aria-label="English">🇬🇧</button>
       </div>
       <a href="tel:+302015744066" class="cta-nav"><span lang-el>Ραντεβού</span><span lang-en>Book</span></a>
     </nav>
@@ -341,6 +344,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </header>
 
+<!-- mobile nav -->
 <div class="mnav" id="mnav">
   <div class="mnav-top">
     <div class="brand">
@@ -361,15 +365,17 @@ html[data-lang="en"] [lang-en]{display:revert}
   </nav>
   <div class="mnav-foot">
     <div class="mnav-lang">
-      <button data-lang="el" class="on">Ελληνικά</button>
-      <button data-lang="en">English</button>
+      <button data-lang="el" class="on">🇬🇷 Ελληνικά</button>
+      <button data-lang="en">🇬🇧 English</button>
     </div>
     <a href="tel:+302015744066" class="mnav-cta"><span lang-el>Κλείστε Ραντεβού</span><span lang-en>Book an Appointment</span></a>
   </div>
 </div>
 
+<!-- ============ HERO ============ -->
 <main id="top">
 <section class="hero">
+  <!-- Ambient floating elements -->
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <svg class="sprig sprig-1 float" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -404,6 +410,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </section>
 
+<!-- ============ ABOUT ============ -->
 <section class="sec about" id="about">
   <div class="wrap about-grid">
     <div class="about-img-wrap reveal-left" data-parallax="0.1">
@@ -435,6 +442,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </section>
 
+<!-- ============ THE SPACE (NEW GALLERY) ============ -->
 <section class="sec space-sec" id="space">
   <div class="wrap">
     <div class="sec-head center-head reveal">
@@ -445,16 +453,17 @@ html[data-lang="en"] [lang-en]{display:revert}
       <p lang-en>A modern, welcoming practice designed with calm and high aesthetics, ensuring our little friends and their parents feel at ease.</p>
     </div>
     <div class="space-grid">
-      <figure class="s-fig zoom reveal delay-1" data-parallax="0.1" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_18-59-17-188.jpg">
+      <figure class="s-fig zoom" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_18-59-17-188.jpg">
         <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_18-59-17-188.jpg" alt="Χώρος αναμονής ιατρείου">
       </figure>
-      <figure class="s-fig zoom reveal delay-2" data-parallax="-0.1" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-25-510.jpg">
+      <figure class="s-fig zoom" data-src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-25-510.jpg">
         <img src="https://raw.githubusercontent.com/agelmet/PANOUSOPOULOU/f5fe84ecdb01a36b2df0a543375daf0a74d681fa/%CE%B5%CE%B9%CE%BA%CF%8C%CE%BD%CE%B1_Viber_2024-05-12_19-02-25-510.jpg" alt="Εξεταστήριο παιδιατρικού ιατρείου">
       </figure>
     </div>
   </div>
 </section>
 
+<!-- ============ SERVICES ============ -->
 <section class="sec services" id="services">
   <div class="wrap">
     <div class="sec-head center-head reveal">
@@ -516,6 +525,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </section>
 
+<!-- ============ PHILOSOPHY ============ -->
 <section class="sec" id="philosophy" style="padding-top:20px;">
   <div class="philo">
     <svg class="sprig sprig-a float" viewBox="0 0 120 200" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -568,6 +578,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </section>
 
+<!-- ============ REVIEWS ============ -->
 <section class="sec reviews" id="reviews">
   <div class="wrap">
     <div class="rev-top reveal">
@@ -607,6 +618,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </section>
 
+<!-- ============ CONTACT ============ -->
 <section class="sec contact" id="contact">
   <div class="wrap">
     <div class="contact-grid reveal">
@@ -641,11 +653,12 @@ html[data-lang="en"] [lang-en]{display:revert}
 </section>
 </main>
 
+<!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
     <div class="foot">
       <div class="brand">
-        <svg class="logo" viewBox="0 0 64 64" fill="none" width="56" height="56"><circle cx="32" cy="32" r="31" fill="#F3ECE0" stroke="#7B9279" stroke-width="1.4"/><path d="M25 48c0-7-4-13-10-15 4-2 9-1 13 1" stroke="#5D7359" stroke-width="2.2" stroke-linecap="round"/><circle cx="21" cy="24" r="5" stroke="#5D7359" stroke-width="2.2"/><path d="M43 48c0-5 3-9 7-11-2-1-5-1-8 0" stroke="#C76B52" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="31" r="4.5" stroke="#C76B52" stroke-width="2.2"/><path d="M30 48c0-5 2-9 6-11 3-2 7-2 10 0" stroke="#D49A8C" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/></svg>
+        <svg class="logo" viewBox="0 0 64 64" fill="none" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#F3ECE0" stroke="#7B9279" stroke-width="1.4"/><path d="M25 48c0-7-4-13-10-15 4-2 9-1 13 1" stroke="#5D7359" stroke-width="2.2" stroke-linecap="round"/><circle cx="21" cy="24" r="5" stroke="#5D7359" stroke-width="2.2"/><path d="M43 48c0-5 3-9 7-11-2-1-5-1-8 0" stroke="#C76B52" stroke-width="2.2" stroke-linecap="round"/><circle cx="46" cy="31" r="4.5" stroke="#C76B52" stroke-width="2.2"/><path d="M30 48c0-5 2-9 6-11 3-2 7-2 10 0" stroke="#D49A8C" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/></svg>
         <span class="bt"><b>Χριστίνα Πανουσοπούλου</b><span lang-el>Παιδίατρος · Νεογνολόγος</span><span lang-en>Pediatrician · Neonatologist</span></span>
       </div>
       <nav class="foot-links">
@@ -663,6 +676,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   </div>
 </footer>
 
+<!-- lightbox -->
 <div class="lbox" id="lbox">
   <button class="lbox-close" id="lclose" aria-label="Close">
     <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>
@@ -712,7 +726,7 @@ html[data-lang="en"] [lang-en]{display:revert}
   },{threshold:.12,rootMargin:'0px 0px -50px 0px'});
   document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el){io.observe(el);});
 
-  // Parallax effect for Wow Factor
+  // Parallax effect for Wow Factor (Space Section removed from parallax logic via removed attributes)
   var parallexEls = document.querySelectorAll('[data-parallax]');
   window.addEventListener('scroll', function() {
     var scrolled = window.pageYOffset;
